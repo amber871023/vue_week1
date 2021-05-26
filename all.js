@@ -51,7 +51,7 @@ render();
 //新增產品 + 防呆
 addBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  if(productTitle.value == "" || productOriginPrice.value == "" || productPrice.value == "" ){
+  if(productTitle.value.trim() == "" || productOriginPrice.value == "" || productPrice.value == "" ){
     alert("請填寫完整資料");
   }else if(productOriginPrice.value < 1 ){
     alert("原價金額不能為0");
@@ -65,10 +65,11 @@ addBtn.addEventListener("click", (e) => {
     price: parseInt(productPrice.value) || 0,
     isEnabled: isEnabled.checked,
   });
+  render();
  alert("新增成功");
   }
   addProductForm.reset();
-  render();
+  
 })
 
 // 刪除所有產品
@@ -84,11 +85,12 @@ productList.addEventListener("click", (e) => {
   const method = e.target.dataset.method;
   let id = e.target.dataset.id;
   if (method == "deleteProduct") {
-    data = deleteProduct(id);
+    data = deleteProduct(id); 
+    render();
   }else if (method == "changeStatus") {
     data = changeStatus(id);
+    render();
   }
-  render();
 });
 
 //刪除一筆產品
@@ -104,5 +106,4 @@ function changeStatus(id){
     }
     return item;
   });
-  render();
 }
